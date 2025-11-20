@@ -1,6 +1,6 @@
 "use client";
 
-import { fetchDataById, useBearerStore } from "@/app/api/api";
+import { editFormDataById, fetchDataById, useBearerStore } from "@/app/api/api";
 import RouteGuard from "@/components/guard/guard";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -40,6 +40,26 @@ export default function SingleData() {
   useEffect(() => {
     fetchdata(id);
   }, [id]);
+
+  const submit = async () => {
+    setOpenSpinner(true);
+    const formdata = {
+      longUrl: data?.longUrl,
+      shortUrl: data?.shortUrl,
+    };
+    try {
+      const response = await editFormDataById(
+        { token: useBearerStore.getState().token, id },
+        formdata
+      );
+      if (response.status === 200) {
+        await fetchdata(id);
+      }
+      setOpenSpinner(false);
+    } catch (error) {
+      console.error("Error fetching data by ID:", error);
+    }
+  };
 
   if (!data) return <div>Loading...</div>;
 
@@ -122,6 +142,14 @@ export default function SingleData() {
               onChange={(e) => setData({ ...data, updatedAt: e.target.value })}
               className="border p-2 rounded w-full "
             />
+          </div>
+          <div>
+            <button
+              onClick={submit}
+              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+            >
+              Update Changes
+            </button>
           </div>
         </div>
       )}
