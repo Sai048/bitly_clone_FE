@@ -143,13 +143,23 @@ export default function SingleData() {
               className="border p-2 rounded w-full "
             />
           </div>
-          <div>
-            <button
-              onClick={submit}
-              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-            >
-              Update Changes
-            </button>
+          <div className="flex gap-2">
+            <div>
+              <button
+                onClick={() => fetchdata(id)}
+                className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 mr-4"
+              >
+                Reset
+              </button>
+            </div>
+            <div>
+              <button
+                onClick={submit}
+                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+              >
+                Update Changes
+              </button>
+            </div>
           </div>
         </div>
       )}
